@@ -1,8 +1,8 @@
-# Morottaja
+# Morottaja - CI-harjoitus
 
-Tämä on JAMK/Tikon OhTu-opintojakson CI-demon esimerkkirepo. Morottaja-"sovellus" on staattinen html-sivu, johon tuodaan [Vue](https://vuejs.org/)-kirjastolla yksinkertainen toiminallisuus. Sovellukseen tehdään [Cypress](https://www.cypress.io):lla yksi automatisoitu testi ja suoritetaan se automaattisesti [CircleCI](https://circleci.com)-palvelua käyttäen. Lopuksi tehdään automaattinen deployment Herokuun, mutta vain mikäli testi menee lävitse.
+Tämä on JAMK/Tikon OhTu-opintojakson CI-demon esimerkkirepo. Morottaja-"sovellus" on staattinen html-sivu, johon tuodaan [Vue](https://vuejs.org/)-kirjastolla yksinkertainen toiminallisuus. Sovellukseen tehdään [Cypress](https://www.cypress.io):lla automatisoituja testejä, jotka ajetaan [CircleCI](https://circleci.com)-palvelua käyttäen. Lopuksi tehdään deployment Herokuun, mikäli testit menevät lävitse.
 
-Deployment AWS S3:een ajan salliessa kontaktitunnilla.
+Deployment AWS S3:een kontaktitunnilla.
 
 ## Testit
 
@@ -18,14 +18,14 @@ Deployment AWS S3:een ajan salliessa kontaktitunnilla.
 }
 ```
 - Siirry hakemistoon cypress/integrations ja poista hakemisto examples.
-- Luo cypress/integrations-hakemistoon tiedosto nimi.js alla olevalla sisällöllä. Tämä tiedosto sisältää cypress-testin, joka kirjoittaa nimi-kenttään merkkijonon "John Doe" ja testaa sisäältääkö #moro-otsikko -elementti tekstin "Moro John Doe".
+- Luo cypress/integrations-hakemistoon tiedosto nimi.js alla olevalla sisällöllä. Tämä tiedosto sisältää testit, jossa tutkitaan onko #nimi-elementissä kiinni css-luokka "punainen", minkä jälkeen kirjoitetaan kenttään merkkijono "John Doe" ja tutkitaan onko "punainen"-luokka hävinnyt. Lopuksi tutkitaan sisäältääkö #moro-otsikko -elementti tekstin "Moro John Doe".
 ```
 describe('moro-nimi', function() {
   it('Syötä John Doe tekstikenttään', function() {
     debugger
-    cy.visit(Cypress.env('HOST') || 'index.html')
-    cy.get('#nimi').type('John Doe')
-    cy.get('#moro-otsikko').contains('Moro John Doe')
+    cy.visit(Cypress.env('HOST') || 'index.html');
+    cy.get('#nimi').should('have.class','punainen').type('John Doe').should('not.have.class','punainen');
+    cy.get('#moro-otsikko').contains('Moro John Doe');
   })
 })
 ```
