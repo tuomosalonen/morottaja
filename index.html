@@ -11,7 +11,7 @@
 
     <div id="morottaja">
         <h1 id="moro-otsikko">Moro {{nimi}}</h1>
-        <input id="nimi" v-model="nimi">
+        <input id="nimi" v-model="nimi" v-on:input="tsekkaaPituus" :class="{punainen : nimiLiianLyhyt}">
     </div>
     
     <script src="https://unpkg.com/vue"></script>
@@ -20,6 +20,12 @@
             el: '#morottaja',
             data: {
                 nimi: '',
+                nimiLiianLyhyt: true
+            },
+            methods: {
+                tsekkaaPituus: function() {
+                    this.nimiLiianLyhyt = this.nimi.length < 4;
+                }
             }
         })
     </script> 
