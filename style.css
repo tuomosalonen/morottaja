@@ -13,3 +13,7 @@ input {
     width: 40vh;
     font-size: 125%;
 }
+
+.punainen {
+    background-color: rgb(200, 50, 50);
+}
