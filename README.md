@@ -1,6 +1,6 @@
-# Morottaja - CI-harjoitus
+# Morottaja - CI/CD-harjoitus
 
-Tämä on JAMK/Tikon OhTu-opintojakson CI-demon esimerkkirepo. Morottaja-"sovellus" on staattinen html-sivu, johon tuodaan [Vue](https://vuejs.org/)-kirjastolla yksinkertainen toiminallisuus. Sovellukseen tehdään [Cypress](https://www.cypress.io):lla automatisoituja testejä, jotka ajetaan [CircleCI](https://circleci.com)-palvelua käyttäen. Lopuksi tehdään deployment Herokuun, mikäli testit menevät lävitse.
+Tämä on JAMK/Tikon OhTu-opintojakson CI/CD-demon esimerkkirepo. Morottaja-"sovellus" on staattinen html-sivu, johon tuodaan [Vue](https://vuejs.org/)-kirjastolla yksinkertainen toiminallisuus. Sovellukseen tehdään [Cypress](https://www.cypress.io):lla automatisoituja testejä, jotka ajetaan [CircleCI](https://circleci.com)-palvelua käyttäen. Lopuksi tehdään deployment Herokuun, mikäli testit menevät lävitse.
 
 Deployment AWS S3:een kontaktitunnilla.
 
@@ -32,8 +32,8 @@ describe('moro-nimi', function() {
 - Aja testi (`npm run cypress:open`) ja valitse integration tests -listasta nimi.js. Tsekkaa, että testi meni lävitse. Tee muutos index.html-tiedoston h1-elementtiin (esimerkiksi "moro" -> "morotus") ja varmistu, että testi ei mene lävitse. Palauta alkuperäinen sisältö h1-elementtiin.
 - Aja testit komentoriviltä komennolla `npx cypress run` tai `$(npm bin)/cypress run` ja varmistu, että Cypress generoi videon testistä (hakemisto cypress/videos). Poista videos-hakemisto.
 - Loggaudu githubiin ja ota [CircleCI](https://circleci.com) käyttöön: github marketplace -> circleci. Kirjaudu circleci-palveluun ja tutustu siihen.
-- Poista kloonatusta git-tyohakemistosta .git-hakemisto, tee uusi repo githubiin ja pushaa tavarat sinne.
-- Integroi githubin repository ja circleci-palvelu, [ohjeistusta](https://docs.cypress.io/guides/guides/continuous-integration.html). Lisää git-tyohakemistoon .circleci-hakemisto ja sen alle config.yml-tiedosto seuraavalla sisällöllä:
+- Poista kloonatusta git-tyohakemistosta .git-hakemisto (tai vaihda gitin origin), tee uusi repo githubiin ja pushaa tavarat sinne.
+- Integroi githubin repository ja circleci-palvelu. Lisää git-tyohakemistoon .circleci-hakemisto ja sen alle config.yml-tiedosto alla olevalla sisällöllä. Commitoi ja pushaa.
 ```
 version: 2
 
@@ -67,7 +67,7 @@ jobs:
           path: cypress/videos
 ```
 - Mene Circleci:hin ja aktivoi buildaus githubin repositorylle. Kun build menee lävitse, varmistu että artifacts-kohdassa on generoitu video. Nyt meillä on kasassa automaattinen buildien testaus. 
-- Kokeile vielä lisätä automaattiset chat-notifikaatiot esimerkiksi Slackiin. Toiminto otetaan käyttöön CircleCI:n asetuksissa kohdassa Chat Notifications.
+- Kokeile halutessasi lisätä automaattiset chat-notifikaatiot esimerkiksi Slackiin. Toiminto otetaan käyttöön CircleCI:n asetuksissa kohdassa Chat Notifications.
 
 ## Tuotantoon siirto
 
@@ -75,7 +75,7 @@ Tehdään seuraavaksi toimet sovelluksen automaattiselle deploymentille Herokuun
 
 - Kirjaudu [Herokuun](https://www.heroku.com/) ja luo uusi app. 
 - Koska sovellus on staattista html:ää, lisää luomaasi appiin staattinen buildpack (osoite: https://github.com/heroku/heroku-buildpack-static) settings-sivulla.
-- Lisää git-tyohakemistoon tiedosto static.json, jossa on seuraava sisältö:
+- Lisää git-tyohakemistoon tiedosto static.json, jossa on seuraava sisältö (commitoi ja pushaa):
 ```
 {
   "root": ".",
