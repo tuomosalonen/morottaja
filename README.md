@@ -1,6 +1,6 @@
 # Morottaja - CI/CD-harjoitus
 
-Tämä on JAMK/Tikon OhTu/OkTv-opintojaksojen CI/CD-demon esimerkkirepo. Morottaja-"sovellus" on staattinen html-sivu, johon tuodaan [Vue](https://vuejs.org/)-kirjastolla yksinkertainen toiminallisuus. Sovellukseen tehdään [Cypress](https://www.cypress.io):lla automatisoitu testicase, joka ajetaan [CircleCI](https://circleci.com)-palvelua käyttäen. Lopuksi tehdään deployment Herokuun, mikäli testit menevät lävitse.
+Tämä on JAMK/Tikon WebKTv/OkTv-opintojaksojen CI/CD-demon esimerkkirepo. Morottaja-"sovellus" on staattinen html-sivu, johon tuodaan [Vue](https://vuejs.org/)-kirjastolla yksinkertainen toiminallisuus. Sovellukseen tehdään [Cypress](https://www.cypress.io):lla automatisoitu testicase, joka ajetaan [CircleCI](https://circleci.com)-palvelua käyttäen. Lopuksi tehdään deployment Herokuun, mikäli testit menevät lävitse.
 
 Asenna aluksi node, mikäli sitä ei ole koneellasi.
 
@@ -9,7 +9,7 @@ Asenna aluksi node, mikäli sitä ei ole koneellasi.
 - Forkkaa tämä repository ja kloonaa repo forkista omalle koneellesi.
 - Tee hakemiston juureen .gitignore-tiedosto, jossa ainakin kohta node_modules (node-binaareja ei viedä gittiin).
 - Tee hakemiston juureen tyhjä package.json-tiedosto antamalla komento `npm init --yes`. Asenna [Cypress](https://www.cypress.io) npm-moduulina komennolla `npm install cypress`.
-- Avaa cypress ja tutustu sen toimintaa lyhyesti: `npx cypress open` tai vaihtoehtoisesti `./node_modules/.bin/cypress open`. Käynnistyksen voi tehdä myös npm:n kautta, esim. `npm run cypress:open`. Tätä varten tulee editoida package.json-tiedostoa seuraavasti:
+- Avaa cypress ja tutustu sen toimintaa lyhyesti: `npx cypress open`. Voit tehdä myös npm-skriptin, jolloin modifioi `package.json`-tiedoston scripts-osaa seuraavasti:
 
 ```json
 {
@@ -20,7 +20,7 @@ Asenna aluksi node, mikäli sitä ei ole koneellasi.
 ```
 
 - Siirry hakemistoon cypress/integrations ja poista hakemisto examples.
-- Luo cypress/integrations-hakemistoon tiedosto nimi.js alla olevalla sisällöllä. Tämä tiedosto sisältää testit, jossa tutkitaan onko #nimi-elementissä kiinni css-luokka "punainen", minkä jälkeen kirjoitetaan kenttään merkkijono "John Doe" ja tutkitaan onko "punainen"-luokka hävinnyt. Lopuksi tutkitaan sisäältääkö #moro-otsikko -elementti tekstin "Moro John Doe".
+- Luo cypress/integrations-hakemistoon tiedosto _nimi.js_ alla olevalla sisällöllä. Tämä tiedosto sisältää testit, jossa tutkitaan onko nimi-elementissä kiinni css-luokka "punainen", minkä jälkeen kirjoitetaan kenttään merkkijono "John Doe" ja tutkitaan onko "punainen"-luokka hävinnyt. Lopuksi tutkitaan sisäältääkö moro-otsikko-elementti tekstin "Moro John Doe".
 
 ```js
 describe('moro-nimi', function () {
@@ -36,11 +36,11 @@ describe('moro-nimi', function () {
 });
 ```
 
-- Aja testi (`npm run cypress:open`) ja valitse integration tests -listasta nimi.js. Tarkasta, että testi meni lävitse. Tee muutos index.html-tiedoston h1-elementtiin (esimerkiksi "moro" -> "morotus") ja varmistu, että testi ei mene lävitse. Palauta alkuperäinen sisältö h1-elementtiin.
-- Aja testit komentoriviltä komennolla `npx cypress run` tai `$(npm bin)/cypress run` ja tarkasta, että Cypress generoi videon testistä (hakemisto cypress/videos). Poista videos-hakemisto tai ainakin tiedosto.
+- Aja testi (`npx cypress open` tai `npm run cypress:open`) ja valitse integration tests -listasta nimi.js. Tarkasta, että testi meni lävitse. Tee muutos index.html-tiedoston h1-elementtiin (esimerkiksi "moro" -> "morotus") ja varmistu, että testi ei mene lävitse. Palauta alkuperäinen sisältö h1-elementtiin.
+- Aja testit komentoriviltä komennolla `npx cypress run` tai `$(npm bin)/cypress run` ja tarkasta, että Cypress generoi videon testistä (hakemisto cypress/videos). Poista videos-hakemisto.
 - Loggaudu GitHubiin ja ota [CircleCI](https://circleci.com) käyttöön: GitHub Marketplace -> CircleCI. Kirjaudu CircleCI-palveluun ja tutustu siihen.
-- Commitoi ja pushaa paikalliseen Git-työhakemistoon tekemäsi muutokset. Mikäli kloonasit alkuperäisen repon, tee uusi repo GitHubiin, vaihda origin sekä commitoi ja pushaa tavarat sinne.
-- Integroidaan githubin repository ja circleci-palvelu: lisää git-tyohakemistoon .circleci-hakemisto ja sen alle config.yml-tiedosto alla olevalla sisällöllä. Commitoi ja pushaa.
+- Commitoi ja pushaa paikalliseen Git-työhakemistoon tekemäsi muutokset. Mikäli kloonasit alkuperäisen repon, tee uusi repo GitHubiin, vaihda origin sekä commitoi ja pushaa tavarat sinne. Mikäli nimeät master-branchin main-branchiksi, muista tehdä vastaava muutos myöhemmin circleCI:n konffitiedostoon.
+- Integroi GitHubin repository ja circleci-palvelu: lisää git-tyohakemistoon _.circleci_-hakemisto ja sen alle _config.yml_-tiedosto alla olevalla sisällöllä. Commitoi ja pushaa.
 
 ```yaml
 version: 2
@@ -64,8 +64,8 @@ jobs:
           path: cypress/videos
 ```
 
-- Mene CircleCI:hin ja aktivoi buildaus GitHubin repositorylle. Kun build menee lävitse, varmistu että Artifacts-kohdassa on generoitu video. Nyt meillä on kasassa automaattinen buildien testaus.
-- Kokeile halutessasi lisätä automaattiset chat-notifikaatiot Slackiin. Toiminto otetaan käyttöön CircleCI:n asetuksissa.
+- Mene CircleCI:hin ja aktivoi buildaus GitHubin repositorylle. Kun build menee lävitse, varmistu että Artifacts-kohdassa on generoitu video. Nyt meillä on kasassa automaatisoitu e2e-testaus.
+- Voit halutessasi kokeile lisätä automaattiset chat-notifikaatiot Slackiin, jos käytät kyseistä sovellusta. Toiminto otetaan käyttöön CircleCI:n asetuksissa.
 
 ## Tuotantoon siirto
 
@@ -73,7 +73,7 @@ Tehdään seuraavaksi toimet sovelluksen automaattiselle deploymentille Herokuun
 
 - Kirjaudu [Herokuun](https://www.heroku.com/) ja luo uusi app.
 - Koska sovellus on staattista html:ää, lisää luomaasi appiin staattinen buildpack (osoite: https://github.com/heroku/heroku-buildpack-static) Settings-sivulla.
-- Lisää git-tyohakemistoon tiedosto static.json, jossa on alla oleva sisältö. Commitoi.
+- Lisää git-tyohakemistoon tiedosto _static_.json, jossa on alla oleva sisältö. Commitoi.
 
 ```json
 {
@@ -83,7 +83,7 @@ Tehdään seuraavaksi toimet sovelluksen automaattiselle deploymentille Herokuun
 ```
 
 - Lisää CircleCI-projektin Environment variables -kohtaan ympäristömuuttujat: HEROKU_APP_NAME (arvoksi tekemäsi app:n nimi) ja HEROKU_API_KEY (käy kopioimassa tämän ympäristömuuttujan arvo kohdasta API key Herokun Account Settings -sivulta).
-- Modifioi .circleci/config.yml -tiedostoa siten, että lisäät siihen deploy-osan ja workflow'n seuraavaan tapaan ([ohjeita](https://circleci.com/docs/2.0/deployment-integrations/#heroku)):
+- Modifioi _.circleci/config.yml_ -tiedostoa siten, että lisäät siihen deploy-osan ja workflow'n seuraavaan tapaan ([ohjeita](https://circleci.com/docs/2.0/deployment-integrations/#heroku)). Mikäli vaihdoit master-branchin main-branchiksi, tee koodiin vastaava muutos.
 
 ```yaml
 version: 2
