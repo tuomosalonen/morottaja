@@ -1,25 +1,27 @@
 # Morottaja - CI/CD-harjoitus
 
-Tämä on JAMK/Tikon WebKTv/OkTv-opintojaksojen CI/CD-demon esimerkkirepo. Morottaja-"sovellus" on staattinen html-sivu, johon tuodaan [Vue](https://vuejs.org/)-kirjastolla yksinkertainen toiminallisuus. Sovellukseen tehdään [Cypress](https://www.cypress.io):lla automatisoitu testicase, joka ajetaan [CircleCI](https://circleci.com)-palvelua käyttäen. Lopuksi tehdään deployment Herokuun, mikäli testit menevät lävitse.
+Tämä on JAMK/Tikon WebKehYmp-opintojakson CI/CD-demon esimerkkirepo. Morottaja-"sovellus" on staattinen html-sivu, johon tuodaan [Vue2](https://vuejs.org/)-kirjastolla yksinkertainen toiminallisuus. Sovellukseen tehdään [Cypress](https://www.cypress.io):lla automatisoitu testicase, joka ajetaan [CircleCI](https://circleci.com)-palvelua käyttäen. Lopuksi tehdään deployment Herokuun, mikäli testit menevät lävitse.
 
 Asenna aluksi node, mikäli sitä ei ole koneellasi.
 
 ## Testit
 
 - Forkkaa tämä repository ja kloonaa repo forkista omalle koneellesi.
+- Kokeile "sovellusta" selaimessasi
 - Tee hakemiston juureen .gitignore-tiedosto, jossa ainakin kohta node_modules (node-binaareja ei viedä gittiin).
 - Tee hakemiston juureen tyhjä package.json-tiedosto antamalla komento `npm init --yes`. Asenna [Cypress](https://www.cypress.io) npm-moduulina komennolla `npm install cypress`.
-- Avaa cypress ja tutustu sen toimintaa lyhyesti: `npx cypress open`. Voit tehdä myös npm-skriptin, jolloin modifioi `package.json`-tiedoston scripts-osaa seuraavasti:
+- Avaa cypress ja tutustu sen toimintaan lyhyesti: `npx cypress open`. Voit tehdä myös npm-skriptin, jolloin modifioi `package.json`-tiedoston scripts-osaa seuraavasti:
 
 ```json
 {
   "scripts": {
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   }
 }
 ```
 
-- Siirry hakemistoon cypress/integrations ja poista hakemisto examples.
+- Siirry hakemistoon cypress/integrations ja poista sen sisältö (kaksi hakemistoa esimerkkejä).
 - Luo cypress/integrations-hakemistoon tiedosto _nimi.js_ alla olevalla sisällöllä. Tämä tiedosto sisältää testit, jossa tutkitaan onko nimi-elementissä kiinni css-luokka "punainen", minkä jälkeen kirjoitetaan kenttään merkkijono "John Doe" ja tutkitaan onko "punainen"-luokka hävinnyt. Lopuksi tutkitaan sisäältääkö moro-otsikko-elementti tekstin "Moro John Doe".
 
 ```js
@@ -37,7 +39,7 @@ describe('moro-nimi', function () {
 ```
 
 - Aja testi (`npx cypress open` tai `npm run cypress:open`) ja valitse integration tests -listasta nimi.js. Tarkasta, että testi meni lävitse. Tee muutos index.html-tiedoston h1-elementtiin (esimerkiksi "moro" -> "morotus") ja varmistu, että testi ei mene lävitse. Palauta alkuperäinen sisältö h1-elementtiin.
-- Aja testit komentoriviltä komennolla `npx cypress run` tai `$(npm bin)/cypress run` ja tarkasta, että Cypress generoi videon testistä (hakemisto cypress/videos). Poista videos-hakemisto.
+- Aja testit komentoriviltä komennolla `npm run cypress:run` (jos lisäsit skriptit yllä) tai `npx cypress run` ja tarkasta, että Cypress generoi videon testistä (hakemisto cypress/videos). Poista videos-hakemisto.
 - Loggaudu GitHubiin ja ota [CircleCI](https://circleci.com) käyttöön: GitHub Marketplace -> CircleCI. Kirjaudu CircleCI-palveluun ja tutustu siihen.
 - Commitoi ja pushaa paikalliseen Git-työhakemistoon tekemäsi muutokset. Mikäli kloonasit alkuperäisen repon, tee uusi repo GitHubiin, vaihda origin sekä commitoi ja pushaa tavarat sinne. Mikäli nimeät master-branchin main-branchiksi, muista tehdä vastaava muutos myöhemmin circleCI:n konffitiedostoon.
 - Integroi GitHubin repository ja circleci-palvelu: lisää git-tyohakemistoon _.circleci_-hakemisto ja sen alle _config.yml_-tiedosto alla olevalla sisällöllä. Commitoi ja pushaa.
@@ -65,7 +67,7 @@ jobs:
 ```
 
 - Mene CircleCI:hin ja aktivoi buildaus GitHubin repositorylle. Kun build menee lävitse, varmistu että Artifacts-kohdassa on generoitu video. Nyt meillä on kasassa automaatisoitu e2e-testaus.
-- Voit halutessasi kokeile lisätä automaattiset chat-notifikaatiot Slackiin, jos käytät kyseistä sovellusta. Toiminto otetaan käyttöön CircleCI:n asetuksissa.
+- Voit halutessasi kokeilla lisätä automaattiset chat-notifikaatiot Slackiin, jos käytät kyseistä sovellusta. Toiminto otetaan käyttöön CircleCI:n projektiasetuksissa.
 
 ## Tuotantoon siirto
 
