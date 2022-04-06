@@ -1,14 +1,14 @@
 # Morottaja - CI/CD-harjoitus
 
-Tämä on JAMK/Tikon WebKehYmp-opintojakson CI/CD-demon esimerkkirepo. Morottaja-"sovellus" on staattinen html-sivu, johon tuodaan [Vue2](https://vuejs.org/)-kirjastolla yksinkertainen toiminallisuus. Sovellukseen tehdään [Cypress](https://www.cypress.io):lla automatisoitu testicase, joka ajetaan [CircleCI](https://circleci.com)-palvelua käyttäen. Lopuksi tehdään deployment Herokuun, mikäli testit menevät lävitse.
+Tämä on JAMK/Tikon (web&data) WebKehYmp-opintojakson CI/CD-demon esimerkkirepo. Morottaja-"sovellus" on staattinen html-sivu, johon tuodaan [Vue2](https://vuejs.org/)-kirjastolla yksinkertainen toiminallisuus. Sovellukseen tehdään [Cypress](https://www.cypress.io):lla automatisoitu testicase, joka ajetaan [CircleCI](https://circleci.com)-palvelua käyttäen. Lopuksi tehdään deployment Herokuun, mikäli testit menevät lävitse.
 
 Asenna aluksi node, mikäli sitä ei ole koneellasi.
 
 ## Testit
 
 - Forkkaa tämä repository ja kloonaa repo forkista omalle koneellesi.
-- Kokeile "sovellusta" selaimessasi
-- Tee hakemiston juureen .gitignore-tiedosto, jossa ainakin kohta node_modules (node-binaareja ei viedä gittiin).
+- Kokeile "sovellusta" selaimessasi. Hieno, eh?
+- Tee hakemiston juureen .gitignore-tiedosto, jossa ainakin kohta node_modules (ei viedä npm-paketteja gittiin).
 - Tee hakemiston juureen tyhjä package.json-tiedosto antamalla komento `npm init --yes`. Asenna [Cypress](https://www.cypress.io) npm-moduulina komennolla `npm install cypress`.
 - Avaa cypress ja tutustu sen toimintaan lyhyesti: `npx cypress open`. Voit tehdä myös npm-skriptin, jolloin modifioi `package.json`-tiedoston scripts-osaa seuraavasti:
 
@@ -132,4 +132,4 @@ workflows:
 ```
 
 - Commitoi muutokset ja pushaa GitHubiin. Mikäli testi menee lävitse, sovelluksen pitäisi olla käytettävissä osoitteessa https://appnimi.herokuapp.com.
-- Poista lopuksi duunisi: Heroku-sovellus, Circleci-konffaus ja GitHub-forkki.
+- Poista lopuksi duunisi: Heroku-sovellus, Circleci-konffaus, GitHub-repo ja paikallinen git-hakemisto.
