@@ -1,0 +1,26 @@
+{
+  "name": "morottaja",
+  "version": "1.0.0",
+  "description": "Tämä on JAMK/Tikon (web&data) WebKehYmp-opintojakson CI/CD-demon esimerkkirepo. Morottaja-\"sovellus\" on staattinen html-sivu, johon tuodaan [Vue2](https://vuejs.org/)-kirjastolla yksinkertainen toiminallisuus. Sovellukseen tehdään [Cypress](https://www.cypress.io):lla automatisoitu testicase, joka ajetaan [CircleCI](https://circleci.com)-palvelua käyttäen. Lopuksi tehdään deployment Herokuun, mikäli testit menevät lävitse.",
+  "main": "index.js",
+  "scripts":
+  {
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
+  },
+ 
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuomosalonen/morottaja.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tuomosalonen/morottaja/issues"
+  },
+  "homepage": "https://github.com/tuomosalonen/morottaja#readme",
+  "dependencies": {
+    "cypress": "^9.5.4"
+  }
+}
